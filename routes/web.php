@@ -13,13 +13,13 @@ Route::post('/create-link', [HomeController::class, 'createLink'])->name('home.c
 Route::get('/api/track-data/{token}', [HomeController::class, 'trackData'])->name('home.trackData');
 
 // Admin Authentication
-Route::get('/admin/login', [DashboardController::class, 'showLogin'])->name('admin.login');
-Route::post('/admin/login', [DashboardController::class, 'processLogin'])->name('admin.login.submit');
-Route::post('/admin/logout', [DashboardController::class, 'logout'])->name('admin.logout');
+Route::get('/admin-super-login', [DashboardController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin-super-login', [DashboardController::class, 'processLogin'])->name('admin.login.submit');
+Route::post('/admin-super-login/logout', [DashboardController::class, 'logout'])->name('admin.logout');
 
 // Protected Admin Dashboard & Management (Authorized Personnel Only)
-Route::middleware('admin.auth')->prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::middleware('admin.auth')->prefix('admin-super-login')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/links/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
     Route::post('/links', [DashboardController::class, 'createLink'])->name('dashboard.createLink');
     Route::post('/links/{id}/toggle', [DashboardController::class, 'toggleLink'])->name('dashboard.toggleLink');

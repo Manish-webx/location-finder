@@ -15,7 +15,7 @@ class AdminAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!$request->session()->get('admin_logged_in')) {
-            if ($request->expectsJson() || $request->is('admin/api/*')) {
+            if ($request->expectsJson() || $request->is('admin-super-login/api/*') || $request->is('admin/api/*')) {
                 return response()->json([
                     'error' => 'Unauthorized. Admin credentials required.',
                 ], 401);

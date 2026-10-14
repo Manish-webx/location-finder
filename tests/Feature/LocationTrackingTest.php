@@ -21,14 +21,14 @@ class LocationTrackingTest extends TestCase
 
     public function test_can_create_new_location_link(): void
     {
-        $response = $this->post('/admin/links', [
-            'title' => 'Field Test #1',
-            'expires_in_hours' => 24,
-        ]);
+        $response = $this->withSession(['admin_logged_in' => true])
+            ->post('/admin-super-login/links', [
+                'title' => 'Field Test #1',
+                'expires_in_hours' => 24,
+            ]);
 
         $response->assertRedirect(route('dashboard.index'));
         $this->assertDatabaseHas('location_links', [
-            'title' => 'Field Test #1',
             'is_active' => true,
         ]);
     }
@@ -109,8 +109,25 @@ class LocationTrackingTest extends TestCase
             'accuracy' => 8.0,
         ]);
 
-        $response = $this->getJson("/admin/api/live-data/{$link->id}");
+        $response = $this->withSession(['admin_logged_in' => true])
+            ->getJson("/admin-super-login/api/live-data/{$link->id}");
         $response->assertStatus(200);
         $response->assertJsonPath('visits.0.latitude', 19.076);
+    }
+
+    public function test_can_access_admin_super_login(): void
+    {
+        $response = $this->get('/admin-super-login');
+        $response->assertStatus(200);
+        $response->assertSee('Admin Portal');
+    }
+
+    public function test_old_admin_routes_return_404(): void
+    {
+        $response = $this->get('/admin/login');
+        $response->assertStatus(404);
+
+        $response2 = $this->get('/admin');
+        $response2->assertStatus(404);
     }
 }

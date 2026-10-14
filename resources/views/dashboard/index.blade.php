@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <strong>Coords:</strong> ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
                                 <strong>Accuracy:</strong> ~${Math.round(accuracy)}m<br>
                                 <strong>Time:</strong> ${dateStr}<br>
-                                <a href="/admin/links/${visit.location_link_id}" class="btn btn-xs btn-primary text-white mt-1 py-0 px-2" style="font-size: 11px; text-decoration: none; border-radius: 4px; display: inline-block;">View Session</a>
+                                <a href="/admin-super-login/links/${visit.location_link_id}" class="btn btn-xs btn-primary text-white mt-1 py-0 px-2" style="font-size: 11px; text-decoration: none; border-radius: 4px; display: inline-block;">View Session</a>
                             </div>
                         `;
 
